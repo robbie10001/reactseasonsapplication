@@ -29,16 +29,21 @@ We are subclassing React.Component
 class App extends React.Component {
     constructor(props) {
         super(props);
-
+        //This is the only time we do direct assignment to this.state
         this.state = { lat: null };
-    }
-    
-    
-    render() {
+
         window.navigator.geolocation.getCurrentPosition(
-            (position) => console.log(position),
+            position => {
+                //to update our state object, we had to called setState. This is a function that gets put on our state object automatically when we extend React.Component
+                //anytime we want to update our state we have to call setState
+                this.setState({ lat: position.coords.latitude })
+            },
             (err) => console.log(err),
             );
+    }
+    
+//React says we have to define render!! 
+    render() {
         return <div>Latitute: {this.state.lat} </div>;
     }
 }
