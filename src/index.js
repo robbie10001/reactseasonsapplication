@@ -23,14 +23,11 @@ By using extends React.Component, we are allowing us to pull a bunch of function
 We are subclassing React.Component
 
 */
-
-
-
 class App extends React.Component {
     constructor(props) {
         super(props);
         //This is the only time we do direct assignment to this.state
-        this.state = { lat: null };
+        this.state = { lat: null, errorMessage: "" };
 
         window.navigator.geolocation.getCurrentPosition(
             position => {
@@ -38,22 +35,33 @@ class App extends React.Component {
                 //anytime we want to update our state we have to call setState
                 this.setState({ lat: position.coords.latitude })
             },
-            (err) => console.log(err),
-            );
+    //example of error handling 
+            err => {
+            this.setState ({ errorMessage: err.message });
+        }
+        );
     }
     
 //React says we have to define render!! 
+//In the below code, we are using conditional rendering! 
     render() {
-        return <div>Latitute: {this.state.lat} </div>;
+        if (this.state.errorMessage && !this.state.lat) {
+            return <div>Error: {this.state.errorMessage}</div>
+        }
+
+        if (!this.state.errorMessage && this.state.lat) {
+            return <div>Latitude: {this.state.lat}</div>
+        }
+
+        return <div>Don't Worry We are Loading!</div>
+
     }
 }
-
 
 ReactDOM.render(
     <App />,
     document.querySelector("#root")
 )
-
 
 /* 
 WHAT IS A COMPONENT? 
@@ -92,17 +100,13 @@ WHAT COMPONENTS DO WE NEED FOR OUR BUILD?
 2. SeasonDisplay- Shows different text/icons based on props from our Apps (the users locations and stuff), the SeasonDisplay, will tell us and render information.
 */
 
-
-
 /*
 APP BUILD 
 1. We are going to get semeantic.min.css (to handle styling).
 2. We add this to our public folder and our index.html within the header as follows. 
 3. https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css/>
-
 4. In order to find out people's location, we are going to use the Geolocation API. 
 5. 
-
 
 */
 
@@ -134,27 +138,32 @@ RULES OF STATE SYSTEM
 
 */
 
-/*STATE SYSTEM IN REACT.
-1. Understanding state it really important in REACT
-2.
-3.
-4.
-5. 
 
-*/
-
-/*USING STATE IN REACT
+/*
+USING STATE IN REACT
 1. Make sure we initalize state when the component is first created.L0
 2. Make sure we use state in our render method.L0
 3. Make sure we update our state after we retrieve the data w want 
+
 */
 
+/* 
+HOW OUR COMPONENTS ACTUALLY RENDER AND WORK WITH STATE
+1. JS file loaded by browser
+2. Instance of App component is created. 
+3. App components 'constuctor' function gets called.
+4. state object is created and assigned to the this.state property. 
+5. we call geolocation service (API)
+6. React calls the components render method
+7. App retruns JSX, gets render to page as HTML
+8. We wait ...
+9. We get result of geolocation 
+10. we update our state object with a call to 'this.setState'
+11. React sees that we update the state of a component
+12. React calls our 'render' method a second time
+13. Render method returns some (updated) JSX 
+14. React takes that JSX and updates content to the screeen
 
-
-
-
-
-
-
+*/
 
 
