@@ -27,12 +27,19 @@ We are subclassing React.Component
 
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { lat: null };
+    }
+    
+    
     render() {
         window.navigator.geolocation.getCurrentPosition(
             (position) => console.log(position),
             (err) => console.log(err),
             );
-        return <div>Latitute: </div>;
+        return <div>Latitute: {this.state.lat} </div>;
     }
 }
 
@@ -111,8 +118,31 @@ RULES OF CLASS COMPONENTS
 3. Must define a "render" method that returns some amount of JSX.
 */
 
+/*
+RULES OF STATE SYSTEM
+1. Only usable with class components.(technically can be used with functional components using the 'hooks' stystem)
+2. You will confuse props with state! 
+3. 'State' is a JS object that contains data relevant to a component. 
+4. Updating 'state' on a component cause the component to (almost) instantly rerender.
+5. State must be initalized when a component is created
+6. State can only be updated using the function 'setState'
 
+*/
 
+/*STATE SYSTEM IN REACT.
+1. Understanding state it really important in REACT
+2.
+3.
+4.
+5. 
+
+*/
+
+/*USING STATE IN REACT
+1. Make sure we initalize state when the component is first created.L0
+2. Make sure we use state in our render method.L0
+3. Make sure we update our state after we retrieve the data w want 
+*/
 
 
 
