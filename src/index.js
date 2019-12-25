@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import SeasonDisplay from "./SeasonDisplay";
 
 /*
 FUNCTION VERSUS CLASS
@@ -24,29 +25,30 @@ We are subclassing React.Component
 
 */
 class App extends React.Component {
+    state = { lat: null, errorMessage: ""};
+    //the above code is the refectored code from the below code!
+
     //the constructor method is a good place to do our state initalisation.
+    /*
     constructor(props) {
         super(props);
         //This is the only time we do direct assignment to this.state
         this.state = { lat: null, errorMessage: "" };
-
+    }
+    */
+    //The componentDidMount method is a perfect place to do some inital data loading for our component or to start some outside process (user position) if we only want to do this one time. 
+    componentDidMount() {
         window.navigator.geolocation.getCurrentPosition(
-            position => {
+            position => this.setState({ lat: position.coords.latitude }),
                 //to update our state object, we had to called setState. This is a function that gets put on our state object automatically when we extend React.Component
                 //anytime we want to update our state we have to call setState
-                this.setState({ lat: position.coords.latitude })
-            },
-    //example of error handling 
-            err => {
-            this.setState ({ errorMessage: err.message });
-        }
-        );
+            err => this.setState ({ errorMessage: err.message }),
+        ); 
     }
-
 
 /* COMPONENT DID MOUNT, COMPONENTDIDUPDATE, COMPONENTWILLUNMOUNT
 
-The componentDidMount method is a perfect place to do some inital data loading for our component or to start some outside process (user position) if we only want to do this one time. 
+
 The componentDidUpdate gets called everytime a component is updated. The componentDidUpdate method is a good place to do more data-loading when state/props change.  
 componentWillunmount is used for when we want to remove a component from the screen. The componentWillUnmount method is a good place to do cleanup (especially for non-React stuff). 
 
@@ -60,11 +62,11 @@ componentWillunmount is used for when we want to remove a component from the scr
         if (this.state.errorMessage && !this.state.lat) {
             return <div>Error: {this.state.errorMessage}</div>
         }
-
+//We can take state from one component and pass it as a prop to the child in the case SeasonDisplay.L0
+//Any time we call setState our SeasonDisplay will update as well! 
         if (!this.state.errorMessage && this.state.lat) {
-            return <div>Latitude: {this.state.lat}</div>
+            return <SeasonDisplay lat={this.state.lat } />
         }
-
         return <div>Don't Worry We are Loading!</div>
 
     }
