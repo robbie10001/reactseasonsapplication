@@ -41,7 +41,10 @@ class App extends React.Component {
         }
         );
     }
-    
+
+
+
+
 //React says we have to define render!! 
 //In the below code, we are using conditional rendering! 
     render() {
@@ -166,4 +169,11 @@ HOW OUR COMPONENTS ACTUALLY RENDER AND WORK WITH STATE
 
 */
 
+/* 
+COMPONENT LIFE CYCLE METHOD.
+1. A function we can opitionally define in a class based component. 
+2. If we choose to call this method that are called my react in the components lifecycle.
+3. The component lifesycle is as followed.L0
+4. Constructor, render (content visable on screen), componentDidMount (sit and wait for updates...), componentDidUpdate(sit and ait until this component is not longer shown), componentWillUnmount. 
 
+*/
