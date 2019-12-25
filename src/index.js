@@ -24,6 +24,7 @@ We are subclassing React.Component
 
 */
 class App extends React.Component {
+    //the constructor method is a good place to do our state initalisation.
     constructor(props) {
         super(props);
         //This is the only time we do direct assignment to this.state
@@ -43,9 +44,17 @@ class App extends React.Component {
     }
 
 
+/* COMPONENT DID MOUNT, COMPONENTDIDUPDATE, COMPONENTWILLUNMOUNT
 
+The componentDidMount method is a perfect place to do some inital data loading for our component or to start some outside process (user position) if we only want to do this one time. 
+The componentDidUpdate gets called everytime a component is updated. The componentDidUpdate method is a good place to do more data-loading when state/props change.  
+componentWillunmount is used for when we want to remove a component from the screen. The componentWillUnmount method is a good place to do cleanup (especially for non-React stuff). 
+
+*/
 
 //React says we have to define render!! 
+//the render method alone, is about return JSX and nothing else!
+//we are not going make a user request or anything like this in the render method!
 //In the below code, we are using conditional rendering! 
     render() {
         if (this.state.errorMessage && !this.state.lat) {
