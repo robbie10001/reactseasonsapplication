@@ -47,6 +47,20 @@ class App extends React.Component {
         ); 
     }
 
+
+//Whevener we have conditional logic, we need to put it into a helper method, like we have done below! 
+    renderContent () {
+        if (this.state.errorMessage && !this.state.lat) {
+            return <div>Error: {this.state.errorMessage}</div>
+        }
+//We can take state from one component and pass it as a prop to the child in the case SeasonDisplay.L0
+//Any time we call setState our SeasonDisplay will update as well! 
+        if (!this.state.errorMessage && this.state.lat) {
+            return <SeasonDisplay lat={this.state.lat } />
+        }
+        return <Spinner message="Please accept location request" />;
+
+    }
 /* COMPONENT DID MOUNT, COMPONENTDIDUPDATE, COMPONENTWILLUNMOUNT
 
 
@@ -60,15 +74,12 @@ componentWillunmount is used for when we want to remove a component from the scr
 //we are not going make a user request or anything like this in the render method!
 //In the below code, we are using conditional rendering! 
     render() {
-        if (this.state.errorMessage && !this.state.lat) {
-            return <div>Error: {this.state.errorMessage}</div>
-        }
-//We can take state from one component and pass it as a prop to the child in the case SeasonDisplay.L0
-//Any time we call setState our SeasonDisplay will update as well! 
-        if (!this.state.errorMessage && this.state.lat) {
-            return <SeasonDisplay lat={this.state.lat } />
-        }
-        return <Spinner />;
+        return (
+            <div className="border red">
+                {this.renderContent()}
+            </div>
+        )
+    
 
     }
 }
