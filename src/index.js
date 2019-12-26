@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SeasonDisplay from "./SeasonDisplay";
+import Spinner from "./Spinner";
 
 /*
 FUNCTION VERSUS CLASS
@@ -67,7 +68,7 @@ componentWillunmount is used for when we want to remove a component from the scr
         if (!this.state.errorMessage && this.state.lat) {
             return <SeasonDisplay lat={this.state.lat } />
         }
-        return <div>Don't Worry We are Loading!</div>
+        return <Spinner />;
 
     }
 }
